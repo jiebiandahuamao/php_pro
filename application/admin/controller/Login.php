@@ -4,7 +4,7 @@ namespace app\admin\controller;
 
 use think\Controller;
 use think\Request;
-
+use think\Session;
 class Login extends Controller
 {
     /**
@@ -32,19 +32,20 @@ class Login extends Controller
         $userModel = model('User')->get(['username' => $name]);;
         if($userModel){
             if(md5($password) == $userModel->password ){
-                echo "login successful";
-                 $_SESSION['username']=$name;
+                Session::set('username',$name);
                 return redirect(url('/admin/index/index','',false));
             }
             else{
-                echo "check you account and password";
-                return redirect(url('/admin/login/index','',false));
+                // return redirect(url('/admin/login/index','',false));
+                $perror = 'check you password';
+                return view('login/login',compact('perror'));
             }
         }
         else{
-            echo "this people dont exist";
-            return redirect(url('/admin/login/index','',false));
-        }
+            // return redirect(url('/admin/login/index','',false));
+            $nerror = 'the account do exist';
+            return view('login/login',compact('nerror'));
+        }   
     }
 
     // 退出

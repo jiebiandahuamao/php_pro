@@ -64,7 +64,7 @@ class User extends Controller
         $status = $userModel->save();
         if($status){
             echo 'insert table successful!!!';
-            $this->success('操作完成','/admin/user/read',3);
+            $this->success('操作完成','/admin/user/index',3);
         }
         else{
             $this->error('操作失败','/admin/user/usercreate',5);      // 需要添加 try except
